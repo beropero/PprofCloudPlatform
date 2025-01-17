@@ -1,0 +1,32 @@
+# https://goframe.org/docs/web/server-config-file-template
+server:
+  address:     ":8000"
+  openapiPath: "/api.json"
+  swaggerPath: "/swagger"
+
+# https://goframe.org/docs/core/glog-config
+logger:
+  level : "all"
+  stdout: true
+
+# https://goframe.org/docs/core/gdb-config-file
+database:
+  default:
+    link: "mysql:root:123456@tcp(127.0.0.1:3306)/pprof_cloud_platform"
+
+redis:
+  default:
+    address: 116.62.117.234:6379
+    db:   5
+    pass: 123456
+
+jwt:
+  secret: "pprof_cloud_platform"
+  expired: 30  # 过期时间 （d）
+
+email:
+  host:     smtp.qq.com
+  port:     587
+  username: 
+  password: 
+  expired:  300 # 过期时间 （s）

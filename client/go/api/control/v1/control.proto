@@ -1,0 +1,28 @@
+syntax = "proto3";
+package control.v1;
+
+message ControlMessage {
+  string message_id = 1;
+  oneof payload {
+    ConfigUpdate config_update = 2;
+    ProfileCommand profile_command = 3;
+    StatusQuery status_query = 4;
+  }
+}
+
+message ConfigUpdate {
+  map<string, string> configs = 1;
+  int64 version = 2;
+}
+
+message ProfileCommand {
+  string command_id = 1;
+  string profile_type = 2;
+  int32 duration_sec = 3;
+}
+
+message CommandResponse {
+  string message_id = 1;
+  int32 code = 2;
+  bytes profile_data = 3;
+}

@@ -1,4 +1,4 @@
-package client
+package capture
 
 import (
 	"bytes"
@@ -6,7 +6,7 @@ import (
 	"time"
 )
 
-// CaptureCPUProfile 获取CPU Profile数据
+// CaptureCPUProfile 采集CPU Profile数据
 func CaptureCPUProfile(duration time.Duration) ([]byte, error) {
 	var buf bytes.Buffer
 	if err := pprof.StartCPUProfile(&buf); err != nil {
@@ -17,7 +17,7 @@ func CaptureCPUProfile(duration time.Duration) ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// CaptureMemoryProfile 采集 Memory Profile数据
+// CaptureMemoryProfile 采集Memory Profile数据
 func CaptureMemoryProfile() ([]byte, error) {
 	var buf bytes.Buffer
 	if err := pprof.WriteHeapProfile(&buf); err != nil {
@@ -26,7 +26,7 @@ func CaptureMemoryProfile() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// CaptureBlockProfile 获取Block Profile数据
+// CaptureBlockProfile 采集Block Profile数据
 func CaptureBlockProfile() ([]byte, error) {
 	var buf bytes.Buffer
 	if err := pprof.Lookup("block").WriteTo(&buf, 0); err != nil {
@@ -35,7 +35,7 @@ func CaptureBlockProfile() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// CaptureMutexProfile 获取Mutex Profile数据
+// CaptureMutexProfile 采集Mutex Profile数据
 func CaptureMutexProfile() ([]byte, error) {
 	var buf bytes.Buffer
 	if err := pprof.Lookup("mutex").WriteTo(&buf, 0); err != nil {
@@ -44,7 +44,7 @@ func CaptureMutexProfile() ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// CaptureGoroutineProfile 获取Goroutine Profile数据
+// CaptureGoroutineProfile 采集Goroutine Profile数据
 func CaptureGoroutineProfile() ([]byte, error) {
 	var buf bytes.Buffer
 	if err := pprof.Lookup("goroutine").WriteTo(&buf, 0); err != nil {

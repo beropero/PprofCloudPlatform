@@ -10,12 +10,10 @@ type Config struct {
 	Interval  time.Duration
 	Timeout   time.Duration
 	UploadUrl string
+	Port      int
 }
 
-var (
-	Cfg = DefaultConfig()
-)
-
+// DefaultConfig returns the default config
 func DefaultConfig() *Config {
 	return &Config{
 		Interval:  30 * time.Second,
@@ -24,6 +22,7 @@ func DefaultConfig() *Config {
 	}
 }
 
+// Validate checks if the config is valid
 func (c *Config) Validate() error {
 	if c.Token == "" {
 		return fmt.Errorf("token must be specified")

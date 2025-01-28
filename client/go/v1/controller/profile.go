@@ -6,7 +6,6 @@ import (
 	"time"
 
 	"github.com/beropero/PprofCloudPlatform/client/go/v1/capture"
-	"github.com/beropero/PprofCloudPlatform/client/go/v1/config"
 	"github.com/beropero/PprofCloudPlatform/client/go/v1/uploader"
 )
 
@@ -18,7 +17,7 @@ type ProfileData struct {
 	Goroutine *bytes.Buffer `json:"goroutine"`
 }
 
-func CaptureProfileDataAndUpload(types []string) error {
+func (c *Controller) CaptureProfileDataAndUpload(types []string) error {
 	data := &ProfileData{} // 初始化所有字段为 nil
 
 	// 去重处理，避免重复捕获相同类型
@@ -79,7 +78,7 @@ func CaptureProfileDataAndUpload(types []string) error {
 		}
 	}
 	// 上传数据
-	err := uploader.UploadJSON(data, config.Cfg.UploadUrl)
+	err := uploader.UploadJSON(data, c.Config.UploadUrl)
 
 	return fmt.Errorf("upload failed: %w", err)
 }

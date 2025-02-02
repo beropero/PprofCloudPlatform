@@ -14,6 +14,7 @@ type (
 		Register(s *ghttp.Server)
 		RegisterAdmin(g *ghttp.RouterGroup)
 		RegisterLogin(g *ghttp.RouterGroup)
+		RegisterUpload(g *ghttp.RouterGroup)
 	}
 )
 

@@ -1,10 +1,14 @@
 module backend
 
-go 1.18
+go 1.22
+
+toolchain go1.22.1
 
 require github.com/gogf/gf/v2 v2.7.1
 
 require golang.org/x/crypto v0.32.0
+
+require github.com/google/pprof v0.0.0-20250128161936-077ca0a936bf // indirect
 
 require (
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect

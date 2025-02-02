@@ -11,8 +11,8 @@ import (
 
 // 定义接收数据的结构体
 type RequestData struct {
-	Token   string   `json:"token"`
-	Strings []string `json:"strings"`
+	Token string   `json:"token"`
+	Types []string `json:"types"`
 }
 
 func (c *Controller) WebServerStart() {
@@ -49,11 +49,11 @@ func (c *Controller) receiveHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(map[string]string{"error": "Invalid token"})
 		return
 	}
-	// 处理接收到的数据（这里只是示例）
-	err = c.CaptureProfileDataAndUpload(requestData.Strings)
+	// 处理接收到的数据
+	err = c.CaptureProfileDataAndUpload(requestData.Types)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(map[string]string{"error": fmt.Sprintf("Failed to upload profile data: %v", err)})
+		json.NewEncoder(w).Encode(map[string]string{"error": "Failed to upload profile data"})
 		return
 	}
 	// 返回成功响应

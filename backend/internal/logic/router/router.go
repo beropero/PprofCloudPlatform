@@ -26,5 +26,6 @@ func (r *sRouter) Register(s *ghttp.Server) {
 		)
 		router.RegisterLogin(group)
 		router.RegisterAdmin(group)
+		router.RegisterUpload(group)
 	})
 }

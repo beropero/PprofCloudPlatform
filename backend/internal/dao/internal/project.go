@@ -11,15 +11,15 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-// ProjectsDao is the data access object for table projects.
-type ProjectsDao struct {
-	table   string          // table is the underlying table name of the DAO.
-	group   string          // group is the database configuration group name of current DAO.
-	columns ProjectsColumns // columns contains all the column names of Table for convenient usage.
+// ProjectDao is the data access object for table project.
+type ProjectDao struct {
+	table   string         // table is the underlying table name of the DAO.
+	group   string         // group is the database configuration group name of current DAO.
+	columns ProjectColumns // columns contains all the column names of Table for convenient usage.
 }
 
-// ProjectsColumns defines and stores column names for table projects.
-type ProjectsColumns struct {
+// ProjectColumns defines and stores column names for table project.
+type ProjectColumns struct {
 	ProjectId          string //
 	CreatorId          string //
 	ProjectName        string //
@@ -29,8 +29,8 @@ type ProjectsColumns struct {
 	DeletedAt          string //
 }
 
-// projectsColumns holds the columns for table projects.
-var projectsColumns = ProjectsColumns{
+// projectColumns holds the columns for table project.
+var projectColumns = ProjectColumns{
 	ProjectId:          "project_id",
 	CreatorId:          "creator_id",
 	ProjectName:        "project_name",
@@ -40,37 +40,37 @@ var projectsColumns = ProjectsColumns{
 	DeletedAt:          "deleted_at",
 }
 
-// NewProjectsDao creates and returns a new DAO object for table data access.
-func NewProjectsDao() *ProjectsDao {
-	return &ProjectsDao{
+// NewProjectDao creates and returns a new DAO object for table data access.
+func NewProjectDao() *ProjectDao {
+	return &ProjectDao{
 		group:   "default",
-		table:   "projects",
-		columns: projectsColumns,
+		table:   "project",
+		columns: projectColumns,
 	}
 }
 
 // DB retrieves and returns the underlying raw database management object of current DAO.
-func (dao *ProjectsDao) DB() gdb.DB {
+func (dao *ProjectDao) DB() gdb.DB {
 	return g.DB(dao.group)
 }
 
 // Table returns the table name of current dao.
-func (dao *ProjectsDao) Table() string {
+func (dao *ProjectDao) Table() string {
 	return dao.table
 }
 
 // Columns returns all column names of current dao.
-func (dao *ProjectsDao) Columns() ProjectsColumns {
+func (dao *ProjectDao) Columns() ProjectColumns {
 	return dao.columns
 }
 
 // Group returns the configuration group name of database of current dao.
-func (dao *ProjectsDao) Group() string {
+func (dao *ProjectDao) Group() string {
 	return dao.group
 }
 
 // Ctx creates and returns the Model for current DAO, It automatically sets the context for current operation.
-func (dao *ProjectsDao) Ctx(ctx context.Context) *gdb.Model {
+func (dao *ProjectDao) Ctx(ctx context.Context) *gdb.Model {
 	return dao.DB().Model(dao.table).Safe().Ctx(ctx)
 }
 
@@ -80,6 +80,6 @@ func (dao *ProjectsDao) Ctx(ctx context.Context) *gdb.Model {
 //
 // Note that, you should not Commit or Rollback the transaction in function f
 // as it is automatically handled by this function.
-func (dao *ProjectsDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
+func (dao *ProjectDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
 	return dao.Ctx(ctx).Transaction(ctx, f)
 }

@@ -8,19 +8,19 @@ import (
 	"backend/internal/dao/internal"
 )
 
-// internalMicroservicesDao is internal type for wrapping internal DAO implements.
-type internalMicroservicesDao = *internal.MicroservicesDao
+// internalProjectDao is internal type for wrapping internal DAO implements.
+type internalProjectDao = *internal.ProjectDao
 
-// microservicesDao is the data access object for table microservices.
+// projectDao is the data access object for table project.
 // You can define custom methods on it to extend its functionality as you wish.
-type microservicesDao struct {
-	internalMicroservicesDao
+type projectDao struct {
+	internalProjectDao
 }
 
 var (
-	// Microservices is globally public accessible object for table microservices operations.
-	Microservices = microservicesDao{
-		internal.NewMicroservicesDao(),
+	// Project is globally public accessible object for table project operations.
+	Project = projectDao{
+		internal.NewProjectDao(),
 	}
 )
 

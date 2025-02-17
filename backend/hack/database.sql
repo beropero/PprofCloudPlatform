@@ -14,7 +14,7 @@ CREATE TABLE users (
 );
 
 -- 项目表
-CREATE TABLE projects (
+CREATE TABLE project (
     project_id INT PRIMARY KEY AUTO_INCREMENT,
     creator_id INT,
     project_name VARCHAR(255) NOT NULL,
@@ -26,9 +26,10 @@ CREATE TABLE projects (
 );
 
 -- 微服务表
-CREATE TABLE microservices (
+CREATE TABLE microservice (
     microservice_id INT PRIMARY KEY AUTO_INCREMENT,
     project_id INT,
+    creator_id INT,
     microservice_name VARCHAR(255) NOT NULL,
     ip VARCHAR(15) NOT NULL,
     port INT NOT NULL,
@@ -36,7 +37,7 @@ CREATE TABLE microservices (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL,
-    FOREIGN KEY (project_id) REFERENCES projects(project_id) ON DELETE CASCADE
+    FOREIGN KEY (project_id) REFERENCES project(project_id) ON DELETE CASCADE
 );
 
 -- 测试记录
@@ -50,6 +51,6 @@ CREATE TABLE profile (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL,
-    FOREIGN KEY (microservice_id) REFERENCES microservices(microservice_id),
-    FOREIGN KEY (project_id) REFERENCES projects(project_id)  
+    FOREIGN KEY (microservice_id) REFERENCES microservice(microservice_id),
+    FOREIGN KEY (project_id) REFERENCES project(project_id)  
 );

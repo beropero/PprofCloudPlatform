@@ -8,10 +8,11 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// Microservices is the golang structure for table microservices.
-type Microservices struct {
+// Microservice is the golang structure for table microservice.
+type Microservice struct {
 	MicroserviceId          int         `json:"microserviceId"          orm:"microservice_id"          description:""` //
 	ProjectId               int         `json:"projectId"               orm:"project_id"               description:""` //
+	CreatorId               int         `json:"creatorId"               orm:"creator_id"               description:""` //
 	MicroserviceName        string      `json:"microserviceName"        orm:"microservice_name"        description:""` //
 	Ip                      string      `json:"ip"                      orm:"ip"                       description:""` //
 	Port                    int         `json:"port"                    orm:"port"                     description:""` //

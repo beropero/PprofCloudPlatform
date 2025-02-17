@@ -9,11 +9,12 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// Microservices is the golang structure of table microservices for DAO operations like Where/Data.
-type Microservices struct {
-	g.Meta                  `orm:"table:microservices, do:true"`
+// Microservice is the golang structure of table microservice for DAO operations like Where/Data.
+type Microservice struct {
+	g.Meta                  `orm:"table:microservice, do:true"`
 	MicroserviceId          interface{} //
 	ProjectId               interface{} //
+	CreatorId               interface{} //
 	MicroserviceName        interface{} //
 	Ip                      interface{} //
 	Port                    interface{} //

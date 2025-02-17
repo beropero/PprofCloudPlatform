@@ -9,9 +9,9 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// Projects is the golang structure of table projects for DAO operations like Where/Data.
-type Projects struct {
-	g.Meta             `orm:"table:projects, do:true"`
+// Project is the golang structure of table project for DAO operations like Where/Data.
+type Project struct {
+	g.Meta             `orm:"table:project, do:true"`
 	ProjectId          interface{} //
 	CreatorId          interface{} //
 	ProjectName        interface{} //

@@ -8,8 +8,8 @@ import (
 	"github.com/gogf/gf/v2/os/gtime"
 )
 
-// Projects is the golang structure for table projects.
-type Projects struct {
+// Project is the golang structure for table project.
+type Project struct {
 	ProjectId          int         `json:"projectId"          orm:"project_id"          description:""` //
 	CreatorId          int         `json:"creatorId"          orm:"creator_id"          description:""` //
 	ProjectName        string      `json:"projectName"        orm:"project_name"        description:""` //

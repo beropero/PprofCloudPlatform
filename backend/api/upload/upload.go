@@ -11,5 +11,5 @@ import (
 )
 
 type IUploadV1 interface {
-	UploadTotal(ctx context.Context, req *v1.UploadTotalReq) (res *v1.UploadTotalRes, err error)
+	Upload(ctx context.Context, req *v1.UploadReq) (res *v1.UploadRes, err error)
 }

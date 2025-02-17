@@ -5,10 +5,12 @@
 package logic
 
 import (
+	_ "backend/internal/logic/analysis"
 	_ "backend/internal/logic/bizctx"
 	_ "backend/internal/logic/jwt"
 	_ "backend/internal/logic/login"
 	_ "backend/internal/logic/middleware"
 	_ "backend/internal/logic/redis"
 	_ "backend/internal/logic/router"
+	_ "backend/internal/logic/upload"
 )

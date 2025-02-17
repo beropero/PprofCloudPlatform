@@ -15,7 +15,6 @@ type Users struct {
 	UserId         interface{} //
 	Email          interface{} //
 	HashedPassword interface{} //
-	Salt           interface{} //
 	Permission     interface{} //
 	Status         interface{} //
 	CreatedAt      *gtime.Time //

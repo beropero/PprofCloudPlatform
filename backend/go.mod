@@ -8,7 +8,12 @@ require github.com/gogf/gf/v2 v2.7.1
 
 require golang.org/x/crypto v0.32.0
 
-require github.com/google/pprof v0.0.0-20250128161936-077ca0a936bf // indirect
+require github.com/google/pprof v0.0.0-20250128161936-077ca0a936bf
+
+require (
+	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible // indirect
+	golang.org/x/time v0.10.0 // indirect
+)
 
 require (
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect

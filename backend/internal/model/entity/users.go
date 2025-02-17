@@ -13,7 +13,6 @@ type Users struct {
 	UserId         int         `json:"userId"         orm:"user_id"         description:""` //
 	Email          string      `json:"email"          orm:"email"           description:""` //
 	HashedPassword string      `json:"hashedPassword" orm:"hashed_password" description:""` //
-	Salt           string      `json:"salt"           orm:"salt"            description:""` //
 	Permission     string      `json:"permission"     orm:"permission"      description:""` //
 	Status         string      `json:"status"         orm:"status"          description:""` //
 	CreatedAt      *gtime.Time `json:"createdAt"      orm:"created_at"      description:""` //

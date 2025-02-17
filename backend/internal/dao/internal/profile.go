@@ -1,0 +1,101 @@
+// ==========================================================================
+// Code generated and maintained by GoFrame CLI tool. DO NOT EDIT.
+// ==========================================================================
+
+package internal
+
+import (
+	"context"
+
+	"github.com/gogf/gf/v2/database/gdb"
+	"github.com/gogf/gf/v2/frame/g"
+)
+
+// ProfileDao is the data access object for table profile.
+type ProfileDao struct {
+	table   string         // table is the underlying table name of the DAO.
+	group   string         // group is the database configuration group name of current DAO.
+	columns ProfileColumns // columns contains all the column names of Table for convenient usage.
+}
+
+// ProfileColumns defines and stores column names for table profile.
+type ProfileColumns struct {
+	Id                string //
+	MicroserviceId    string //
+	ProjectId         string //
+	DefaultSampleType string //
+	DocUrl            string //
+	DropFrames        string //
+	KeepFrames        string //
+	TimeNanos         string //
+	DurationNanos     string //
+	Period            string //
+	PeriodTypeType    string //
+	PeriodTypeUnit    string //
+	CreatedAt         string //
+	UpdatedAt         string //
+	DeletedAt         string //
+}
+
+// profileColumns holds the columns for table profile.
+var profileColumns = ProfileColumns{
+	Id:                "id",
+	MicroserviceId:    "microservice_id",
+	ProjectId:         "project_id",
+	DefaultSampleType: "default_sample_type",
+	DocUrl:            "doc_url",
+	DropFrames:        "drop_frames",
+	KeepFrames:        "keep_frames",
+	TimeNanos:         "time_nanos",
+	DurationNanos:     "duration_nanos",
+	Period:            "period",
+	PeriodTypeType:    "period_type_type",
+	PeriodTypeUnit:    "period_type_unit",
+	CreatedAt:         "created_at",
+	UpdatedAt:         "updated_at",
+	DeletedAt:         "deleted_at",
+}
+
+// NewProfileDao creates and returns a new DAO object for table data access.
+func NewProfileDao() *ProfileDao {
+	return &ProfileDao{
+		group:   "default",
+		table:   "profile",
+		columns: profileColumns,
+	}
+}
+
+// DB retrieves and returns the underlying raw database management object of current DAO.
+func (dao *ProfileDao) DB() gdb.DB {
+	return g.DB(dao.group)
+}
+
+// Table returns the table name of current dao.
+func (dao *ProfileDao) Table() string {
+	return dao.table
+}
+
+// Columns returns all column names of current dao.
+func (dao *ProfileDao) Columns() ProfileColumns {
+	return dao.columns
+}
+
+// Group returns the configuration group name of database of current dao.
+func (dao *ProfileDao) Group() string {
+	return dao.group
+}
+
+// Ctx creates and returns the Model for current DAO, It automatically sets the context for current operation.
+func (dao *ProfileDao) Ctx(ctx context.Context) *gdb.Model {
+	return dao.DB().Model(dao.table).Safe().Ctx(ctx)
+}
+
+// Transaction wraps the transaction logic using function f.
+// It rollbacks the transaction and returns the error from function f if it returns non-nil error.
+// It commits the transaction and returns nil if function f returns nil.
+//
+// Note that, you should not Commit or Rollback the transaction in function f
+// as it is automatically handled by this function.
+func (dao *ProfileDao) Transaction(ctx context.Context, f func(ctx context.Context, tx gdb.TX) error) (err error) {
+	return dao.Ctx(ctx).Transaction(ctx, f)
+}

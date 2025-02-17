@@ -23,7 +23,6 @@ type UsersColumns struct {
 	UserId         string //
 	Email          string //
 	HashedPassword string //
-	Salt           string //
 	Permission     string //
 	Status         string //
 	CreatedAt      string //
@@ -36,7 +35,6 @@ var usersColumns = UsersColumns{
 	UserId:         "user_id",
 	Email:          "email",
 	HashedPassword: "hashed_password",
-	Salt:           "salt",
 	Permission:     "permission",
 	Status:         "status",
 	CreatedAt:      "created_at",

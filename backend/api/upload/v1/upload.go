@@ -5,8 +5,9 @@ import (
 	"github.com/gogf/gf/v2/net/ghttp"
 )
 
-type UploadTotalReq struct {
-	g.Meta    `path:"/uploadtotal" method:"post" tags:"Upload" mime:"multipart/form-data" summary:"上传所有性能数据"`
+type UploadReq struct {
+	g.Meta    `path:"/uploadfile" method:"post" tags:"Upload" mime:"multipart/form-data" summary:"上传所有性能数据"`
+	Types     []string          `form:"type" json:"types" v:"required#类型不能为空"`
 	Cpu       *ghttp.UploadFile `form:"cpu" json:"cpu"`
 	Memory    *ghttp.UploadFile `form:"memory" json:"memory"`
 	Mutex     *ghttp.UploadFile `form:"mutex" json:"mutex"`
@@ -14,7 +15,6 @@ type UploadTotalReq struct {
 	Goroutine *ghttp.UploadFile `form:"goroutine" json:"goroutine"`
 }
 
-type UploadTotalRes struct {
-	Code int    `json:"code"`
-	Msg  string `json:"msg"`
+type UploadRes struct {
+	Msg string `json:"msg"`
 }

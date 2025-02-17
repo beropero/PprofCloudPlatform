@@ -11,7 +11,7 @@ require golang.org/x/crypto v0.32.0
 require github.com/google/pprof v0.0.0-20250128161936-077ca0a936bf
 
 require (
-	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible // indirect
+	github.com/aliyun/aliyun-oss-go-sdk v3.0.2+incompatible
 	golang.org/x/time v0.10.0 // indirect
 )
 

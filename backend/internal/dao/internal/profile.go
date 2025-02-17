@@ -20,40 +20,26 @@ type ProfileDao struct {
 
 // ProfileColumns defines and stores column names for table profile.
 type ProfileColumns struct {
-	Id                string //
-	MicroserviceId    string //
-	ProjectId         string //
-	DefaultSampleType string //
-	DocUrl            string //
-	DropFrames        string //
-	KeepFrames        string //
-	TimeNanos         string //
-	DurationNanos     string //
-	Period            string //
-	PeriodTypeType    string //
-	PeriodTypeUnit    string //
-	CreatedAt         string //
-	UpdatedAt         string //
-	DeletedAt         string //
+	Id             string //
+	MicroserviceId string //
+	ProjectId      string //
+	Ptype          string //
+	OssPath        string //
+	CreatedAt      string //
+	UpdatedAt      string //
+	DeletedAt      string //
 }
 
 // profileColumns holds the columns for table profile.
 var profileColumns = ProfileColumns{
-	Id:                "id",
-	MicroserviceId:    "microservice_id",
-	ProjectId:         "project_id",
-	DefaultSampleType: "default_sample_type",
-	DocUrl:            "doc_url",
-	DropFrames:        "drop_frames",
-	KeepFrames:        "keep_frames",
-	TimeNanos:         "time_nanos",
-	DurationNanos:     "duration_nanos",
-	Period:            "period",
-	PeriodTypeType:    "period_type_type",
-	PeriodTypeUnit:    "period_type_unit",
-	CreatedAt:         "created_at",
-	UpdatedAt:         "updated_at",
-	DeletedAt:         "deleted_at",
+	Id:             "id",
+	MicroserviceId: "microservice_id",
+	ProjectId:      "project_id",
+	Ptype:          "ptype",
+	OssPath:        "OssPath",
+	CreatedAt:      "created_at",
+	UpdatedAt:      "updated_at",
+	DeletedAt:      "deleted_at",
 }
 
 // NewProfileDao creates and returns a new DAO object for table data access.

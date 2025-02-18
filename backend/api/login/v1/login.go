@@ -21,3 +21,12 @@ type RegisterReq struct {
 type RegisterRes struct {
 	Token string `json:"token"`
 }
+
+type GetEmailCodeReq struct {
+	g.Meta `path:"/getemailcode" method:"post" tags:"Login" summary:"获取邮箱验证码"`
+	Email  string `json:"email"    v:"required#email"`
+}
+
+type GetEmailCodeRes struct {
+	Msg string `json:"msg"`
+}

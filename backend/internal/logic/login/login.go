@@ -1,7 +1,6 @@
 package login
 
 import (
-	"backend/internal/consts"
 	"backend/internal/dao"
 	"backend/internal/model"
 	"backend/internal/model/entity"
@@ -11,9 +10,7 @@ import (
 
 	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
-	"github.com/gogf/gf/v2/util/grand"
 	"golang.org/x/crypto/bcrypt"
-	"gopkg.in/gomail.v2"
 )
 
 type sLogin struct{}
@@ -95,32 +92,5 @@ func (s *sLogin) UserRegister(ctx context.Context, in model.UserRegisterInput) (
 		return
 	}
 	out.Token = jwtout.Token
-	return
-}
-
-func (s *sLogin) EmailSendCode(ctx context.Context, in model.EmailSendCodeInput) (err error) {
-	// 生成6位随机验证码
-	var (
-		code = grand.Digits(6)
-	)
-
-	m := gomail.NewMessage()
-	m.SetHeader("From", consts.EmailCfg.Username)
-	m.SetHeader("To", in.Email)
-	m.SetHeader("Subject", "验证码")
-
-	msg := fmt.Sprintf("你的验证码为: %s", code)
-	m.SetBody("text/html", msg)
-
-	d := gomail.NewDialer(consts.EmailCfg.Host, consts.EmailCfg.Port, consts.EmailCfg.Username, consts.EmailCfg.Password)
-	err = d.DialAndSend(m)
-	if err != nil {
-		return
-	}
-	// 保存到Redis
-	err = service.Redis().SaveEmailCode(ctx, model.SaveEmailCodeInput{
-		Code:  code,
-		Email: in.Email,
-	})
 	return
 }

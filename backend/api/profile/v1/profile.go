@@ -7,7 +7,7 @@ import (
 )
 
 type DeleteProfileByIdsReq struct {
-	g.Meta `path:"/deleteprofilebyids" method:"post" tags:"Profile" summary:"删除Profile"`
+	g.Meta `path:"/deleteprofilebyids" method:"delete" tags:"Profile" summary:"删除Profile"`
 	Ids    []int `json:"ids" v:"required#ID不能为空"`
 }
 
@@ -16,10 +16,11 @@ type DeleteProfileByIdsRes struct {
 }
 
 type CreateProfileReq struct {
-	g.Meta             `path:"/createprofile" method:"post" tags:"Profile" summary:"创建Profile"`
-	ProfileId          int    `json:"profileId"  `
-	ProfileName        string `json:"profileName"  `
-	ProfileDescription string `json:"profileDescription"  `
+	g.Meta         `path:"/createprofile" method:"post" tags:"Profile" summary:"创建Profile"`
+	MicroserviceId int    `json:"microserviceId"  v:"required#MicroserviceId不能为空"`
+	ProjectId      int    `json:"projectId"   v:"required#ProjectId不能为空"`
+	Comment        string `json:"comment"    `
+	Ptype          string `json:"ptype"       v:"required#Ptype不能为空"`
 }
 
 type CreateProfileRes struct {
@@ -27,8 +28,8 @@ type CreateProfileRes struct {
 }
 
 type UpdateProfileReq struct {
-	g.Meta    `path:"/updateprofile" method:"post" tags:"Profile" summary:"更新Profile"`
-	ProfileId int    `json:"projectId"   `
+	g.Meta    `path:"/updateprofile" method:"put" tags:"Profile" summary:"更新Profile"`
+	ProfileId int    `json:"profileId"   `
 	Comment   string `json:"comment"    `
 }
 
@@ -38,8 +39,8 @@ type UpdateProfileRes struct {
 
 type GetProfileByPageUserReq struct {
 	g.Meta         `path:"/getprofilebypageuser" method:"post" tags:"Profile" summary:"分页获取Profile"`
-	Page           int    `json:"page"   `
-	PageSize       int    `json:"pageSize"   `
+	Page               int    `json:"page" d:"1"`
+	PageSize           int    `json:"pageSize" d:"10"`
 	ProfileId      int    `json:"profileId"   `
 	MicroserviceId int    `json:"microserviceId"` //
 	ProjectId      int    `json:"projectId"     ` //

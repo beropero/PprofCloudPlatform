@@ -11,31 +11,6 @@ import (
 	"github.com/gogf/gf/v2/frame/g"
 )
 
-// // 验证码校验
-// func (s *sRedis) CheckEmailCode(ctx context.Context, in model.CheckEmailCodeInput) (err error) {
-// 	var (
-// 		rediskey = fmt.Sprintf("email:code:%s", in.Email)
-// 	)
-// 	// 读取验证码
-// 	code, _ := g.Redis().Do(ctx, "GET", rediskey)
-// 	if code.String() != in.Code {
-// 		return gerror.New("验证码错误")
-// 	}
-// 	// 删除验证码
-// 	_, err = g.Redis().Do(ctx, "DEL", rediskey)
-
-// 	return err
-// }
-
-// // 保存邮箱验证码
-// func (s *sRedis) SaveEmailCode(ctx context.Context, in model.SaveEmailCodeInput) (err error) {
-// 	var (
-// 		rediskey = fmt.Sprintf("email:code:%s", in.Email)
-// 	)
-// 	_, err = g.Redis().Do(ctx, "SETEX", rediskey, consts.EmailCfg.Expired, in.Code)
-// 	return err
-// }
-
 // 保存jwt令牌
 func (s *sRedis) SaveJwtToken(ctx context.Context, in model.SaveJwtTokenInput) (err error) {
 	var (

@@ -16,7 +16,6 @@ type (
 		UserLogin(ctx context.Context, in model.UserLoginInput) (out model.UserLoginOutput, err error)
 		// 用户注册
 		UserRegister(ctx context.Context, in model.UserRegisterInput) (out model.UserRegisterOutput, err error)
-		EmailSendCode(ctx context.Context, in model.EmailSendCodeInput) (err error)
 	}
 )
 

@@ -18,9 +18,9 @@ database:
 
 redis:
   default:
-    address: 116.62.117.234:6379
-    db:   5
-    pass: 123456
+    address: 127.0.0.1:6379
+    db:   0
+    pass: 
 
 jwt:
   secret: "pprof_cloud_platform"

@@ -7,7 +7,7 @@ import (
 )
 
 type DeleteMicroserviceByIdsReq struct {
-	g.Meta `path:"/deletemicroservicebyids" method:"post" tags:"Microservice" summary:"删除Microservice"`
+	g.Meta `path:"/deletemicroservicebyids" method:"delete" tags:"Microservice" summary:"删除Microservice"`
 	Ids    []int `json:"ids" v:"required#ID不能为空"`
 }
 
@@ -29,7 +29,7 @@ type CreateMicroserviceRes struct {
 }
 
 type UpdateMicroserviceReq struct {
-	g.Meta                  `path:"/updatemicroservice" method:"post" tags:"Microservice" summary:"更新Microservice"`
+	g.Meta                  `path:"/updatemicroservice" method:"put" tags:"Microservice" summary:"更新Microservice"`
 	ProjectId               int    `json:"ProjectId"   `
 	Ip                      string `json:"Ip"   `
 	Port                    int    `json:"Port"   `

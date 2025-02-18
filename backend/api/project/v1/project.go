@@ -7,7 +7,7 @@ import (
 )
 
 type DeleteProjectByIdsReq struct {
-	g.Meta `path:"/deleteprojectbyids" method:"post" tags:"Project" summary:"删除Project"`
+	g.Meta `path:"/deleteprojectbyids" method:"delete" tags:"Project" summary:"删除Project"`
 	Ids    []int `json:"ids" v:"required#ID不能为空"`
 }
 
@@ -27,7 +27,7 @@ type CreateProjectRes struct {
 }
 
 type UpdateProjectReq struct {
-	g.Meta             `path:"/updateproject" method:"post" tags:"Project" summary:"更新Project"`
+	g.Meta             `path:"/updateproject" method:"put" tags:"Project" summary:"更新Project"`
 	ProjectId          int    `json:"profileId"  `
 	ProjectName        string `json:"profileName"  `
 	ProjectDescription string `json:"profileDescription"  `

@@ -13,4 +13,5 @@ import (
 type ILoginV1 interface {
 	Login(ctx context.Context, req *v1.LoginReq) (res *v1.LoginRes, err error)
 	Register(ctx context.Context, req *v1.RegisterReq) (res *v1.RegisterRes, err error)
+	GetEmailCode(ctx context.Context, req *v1.GetEmailCodeReq) (res *v1.GetEmailCodeRes, err error)
 }

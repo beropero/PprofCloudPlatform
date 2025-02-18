@@ -5,7 +5,6 @@ import (
 )
 
 type CreateProfileInput struct {
-	Id             uint64 `json:"id"            `  //
 	MicroserviceId int    `json:"microserviceId" ` //
 	ProjectId      int    `json:"projectId"    `   //
 	Ptype          string `json:"ptype"       `    //

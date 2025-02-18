@@ -64,10 +64,10 @@ func (s *sLogin) UserRegister(ctx context.Context, in model.UserRegisterInput) (
 	if err != nil {
 		return out, gerror.New("验证码错误")
 	}
-	err = dao.Users.Ctx(ctx).Where(g.Map{
+	count, err := dao.Users.Ctx(ctx).Where(g.Map{
 		"email": in.Email,
-	}).Scan(&info)
-	if err != nil || info.UserId != 0 {
+	}).Count()
+	if err != nil || count > 0 {
 		return out, gerror.New("用户已存在")
 	}
 	// 生成密码哈希值

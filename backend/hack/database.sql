@@ -61,7 +61,7 @@ CREATE TABLE profile (
 -- 测试数据
 -- 生成1个用户
 INSERT INTO users (email, hashed_password, permission, status) VALUES
-('user1@example.com', 'hashed_password1', 'user', 'active');
+('user1@example.com', '$2a$10$djutXo6qKRBfMY.X1YWrZOokzghdsUyNA1Zhgtsd5lHYGEU6Wl3e6', 'user', 'active');
 
 
 -- 生成10个项目（用用户ID=1）

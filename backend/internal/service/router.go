@@ -14,6 +14,9 @@ type (
 		Register(s *ghttp.Server)
 		RegisterAdmin(g *ghttp.RouterGroup)
 		RegisterLogin(g *ghttp.RouterGroup)
+		RegisterMicroservice(g *ghttp.RouterGroup)
+		RegisterProfile(g *ghttp.RouterGroup)
+		RegisterProject(g *ghttp.RouterGroup)
 		RegisterUpload(g *ghttp.RouterGroup)
 	}
 )

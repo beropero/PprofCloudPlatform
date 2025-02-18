@@ -9,7 +9,7 @@ import (
 	_ "backend/internal/logic/bizctx"
 	_ "backend/internal/logic/jwt"
 	_ "backend/internal/logic/login"
-	_ "backend/internal/logic/microservices"
+	_ "backend/internal/logic/microservice"
 	_ "backend/internal/logic/middleware"
 	_ "backend/internal/logic/profile"
 	_ "backend/internal/logic/project"

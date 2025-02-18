@@ -12,6 +12,7 @@ import (
 
 type (
 	IProfile interface {
+		CreateProfile(ctx context.Context, in model.CreateProfileInput) (err error)
 		DeleteProfileByIds(ctx context.Context, in model.DeleteProfileByIdsInput) (err error)
 		UpdateProfile(ctx context.Context, in model.UpdateProfileInput) (err error)
 		GetProfileByPageUser(ctx context.Context, in model.GetProfileByPageUserInput) (out model.GetProfileByPageUserOutput, err error)

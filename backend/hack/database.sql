@@ -59,7 +59,7 @@ CREATE TABLE profile (
 
 
 -- 测试数据
--- 生成1个用户
+-- 生成1个用户,密码123456
 INSERT INTO users (email, hashed_password, permission, status) VALUES
 ('user1@example.com', '$2a$10$djutXo6qKRBfMY.X1YWrZOokzghdsUyNA1Zhgtsd5lHYGEU6Wl3e6', 'user', 'active');
 

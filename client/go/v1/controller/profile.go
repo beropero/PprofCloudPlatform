@@ -6,6 +6,7 @@ import (
 	"mime/multipart"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/beropero/PprofCloudPlatform/client/go/v1/capture"
@@ -24,6 +25,11 @@ func (c *Controller) CaptureProfileDataAndUpload(types []string) error {
 	// 创建请求体缓冲区
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
+	// 添加类型作为表单字段
+	err := writer.WriteField("types", strings.Join(types, ","))
+	if err != nil {
+		return fmt.Errorf("failed to write types field: %w", err)
+	}
 	// 添加服务名称作为表单字段
 	if err := writer.WriteField("service", "pprofprofile"); err != nil {
 		return fmt.Errorf("failed to write service field: %w", err)
@@ -103,9 +109,11 @@ func (c *Controller) CaptureProfileDataAndUpload(types []string) error {
 		}
 	}
 	// 上传数据
-	err := uploader.UploadFormData(body, writer, c.Config.UploadUrl)
-
-	return fmt.Errorf("upload failed: %w", err)
+	err = uploader.UploadFormData(body, writer, c.Config.UploadUrl)
+	if err != nil {
+		return fmt.Errorf("failed to upload profile data: %w", err)
+	}
+	return nil
 }
 
 // 辅助函数：添加二进制数据到表单

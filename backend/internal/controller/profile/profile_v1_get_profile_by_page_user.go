@@ -3,8 +3,6 @@ package profile
 import (
 	"context"
 
-	"github.com/gogf/gf/v2/errors/gcode"
-	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/util/gconv"
 
 	v1 "backend/api/profile/v1"
@@ -29,5 +27,5 @@ func (c *ControllerV1) GetProfileByPageUser(ctx context.Context, req *v1.GetProf
 	}
 	gconv.Scan(out, &res)
 	res.Msg = "success"
-	return nil, gerror.NewCode(gcode.CodeNotImplemented)
+	return
 }

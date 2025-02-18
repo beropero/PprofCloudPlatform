@@ -13,7 +13,7 @@ func main() {
 		Interval:  30 * time.Second,
 		Timeout:   10 * time.Second,
 		Port:      8090,
-		UploadUrl: "http://127.0.0.1:8000/upload/uploadtotal",
+		UploadUrl: "http://127.0.0.1:8086/upload/uploadfile",
 		Token:     "123456",
 	})
 	if err != nil {

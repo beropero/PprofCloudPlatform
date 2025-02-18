@@ -24,6 +24,7 @@ type ProjectColumns struct {
 	CreatorId          string //
 	ProjectName        string //
 	ProjectDescription string //
+	ProjectToken       string //
 	CreatedAt          string //
 	UpdatedAt          string //
 	DeletedAt          string //
@@ -35,6 +36,7 @@ var projectColumns = ProjectColumns{
 	CreatorId:          "creator_id",
 	ProjectName:        "project_name",
 	ProjectDescription: "project_description",
+	ProjectToken:       "project_token",
 	CreatedAt:          "created_at",
 	UpdatedAt:          "updated_at",
 	DeletedAt:          "deleted_at",

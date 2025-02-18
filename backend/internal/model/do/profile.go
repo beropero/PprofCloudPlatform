@@ -17,6 +17,7 @@ type Profile struct {
 	ProjectId      interface{} //
 	Ptype          interface{} //
 	OssPath        interface{} //
+	Comment        interface{} //
 	CreatedAt      *gtime.Time //
 	UpdatedAt      *gtime.Time //
 	DeletedAt      *gtime.Time //

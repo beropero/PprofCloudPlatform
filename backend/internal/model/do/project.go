@@ -16,6 +16,7 @@ type Project struct {
 	CreatorId          interface{} //
 	ProjectName        interface{} //
 	ProjectDescription interface{} //
+	ProjectToken       interface{} //
 	CreatedAt          *gtime.Time //
 	UpdatedAt          *gtime.Time //
 	DeletedAt          *gtime.Time //

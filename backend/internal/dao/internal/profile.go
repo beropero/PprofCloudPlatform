@@ -25,6 +25,7 @@ type ProfileColumns struct {
 	ProjectId      string //
 	Ptype          string //
 	OssPath        string //
+	Comment        string //
 	CreatedAt      string //
 	UpdatedAt      string //
 	DeletedAt      string //
@@ -36,7 +37,8 @@ var profileColumns = ProfileColumns{
 	MicroserviceId: "microservice_id",
 	ProjectId:      "project_id",
 	Ptype:          "ptype",
-	OssPath:        "OssPath",
+	OssPath:        "oss_path",
+	Comment:        "comment",
 	CreatedAt:      "created_at",
 	UpdatedAt:      "updated_at",
 	DeletedAt:      "deleted_at",

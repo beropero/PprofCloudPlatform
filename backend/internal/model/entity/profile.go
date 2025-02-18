@@ -14,7 +14,8 @@ type Profile struct {
 	MicroserviceId int         `json:"microserviceId" orm:"microservice_id" description:""` //
 	ProjectId      int         `json:"projectId"      orm:"project_id"      description:""` //
 	Ptype          string      `json:"ptype"          orm:"ptype"           description:""` //
-	OssPath        string      `json:"ossPath"        orm:"OssPath"         description:""` //
+	OssPath        string      `json:"ossPath"        orm:"oss_path"        description:""` //
+	Comment        string      `json:"comment"        orm:"comment"         description:""` //
 	CreatedAt      *gtime.Time `json:"createdAt"      orm:"created_at"      description:""` //
 	UpdatedAt      *gtime.Time `json:"updatedAt"      orm:"updated_at"      description:""` //
 	DeletedAt      *gtime.Time `json:"deletedAt"      orm:"deleted_at"      description:""` //

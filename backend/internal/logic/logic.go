@@ -11,6 +11,7 @@ import (
 	_ "backend/internal/logic/login"
 	_ "backend/internal/logic/microservices"
 	_ "backend/internal/logic/middleware"
+	_ "backend/internal/logic/profile"
 	_ "backend/internal/logic/project"
 	_ "backend/internal/logic/redis"
 	_ "backend/internal/logic/router"

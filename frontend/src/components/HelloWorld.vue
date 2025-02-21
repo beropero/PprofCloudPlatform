@@ -1,5 +1,8 @@
 <template>
-  <v-container class="fill-height">
+  <v-container
+    class="fill-height"
+    style="color: #111;"
+  >
     <v-responsive
       class="align-centerfill-height mx-auto"
       max-width="900"
@@ -11,9 +14,13 @@
       />
 
       <div class="text-center">
-        <div class="text-body-2 font-weight-light mb-n1">Welcome to</div>
+        <div class="text-body-2 font-weight-light mb-n1">
+          Welcome to
+        </div>
 
-        <h1 class="text-h2 font-weight-bold">Vuetify</h1>
+        <h1 class="text-h2 font-weight-bold">
+          Pprof Cloud Platform
+        </h1>
       </div>
 
       <div class="py-4" />
@@ -22,23 +29,26 @@
         <v-col cols="12">
           <v-card
             class="py-4"
-            color="surface-variant"
+            color="#111"
             image="https://cdn.vuetifyjs.com/docs/images/one/create/feature.png"
             prepend-icon="mdi-rocket-launch-outline"
             rounded="lg"
-            variant="outlined"
+            style="background-color: #e8f1ff;color: #111;"
+            @click="() => $router.push('/login')"
           >
             <template #image>
               <v-img position="top right" />
             </template>
 
             <template #title>
-              <h2 class="text-h5 font-weight-bold">Get started</h2>
+              <h2 class="text-h5 font-weight-bold">
+                Get started
+              </h2>
             </template>
 
             <template #subtitle>
               <div class="text-subtitle-1">
-                Replace this page by removing <v-kbd>{{ `<HelloWorld />` }}</v-kbd> in <v-kbd>pages/index.vue</v-kbd>.
+                Start logging in or registering and using pprof cloud platform
               </div>
             </template>
 
@@ -56,12 +66,12 @@
           <v-card
             append-icon="mdi-open-in-new"
             class="py-4"
-            color="surface-variant"
+            color="#111"
             href="https://vuetifyjs.com/"
             prepend-icon="mdi-text-box-outline"
             rel="noopener noreferrer"
             rounded="lg"
-            subtitle="Learn about all things Vuetify in our documentation."
+            subtitle="Learn about all things  Pprof Cloud Platform in our documentation."
             target="_blank"
             title="Documentation"
             variant="text"
@@ -80,7 +90,7 @@
           <v-card
             append-icon="mdi-open-in-new"
             class="py-4"
-            color="surface-variant"
+            color="#111"
             href="https://vuetifyjs.com/introduction/why-vuetify/#feature-guides"
             prepend-icon="mdi-star-circle-outline"
             rel="noopener noreferrer"
@@ -104,7 +114,7 @@
           <v-card
             append-icon="mdi-open-in-new"
             class="py-4"
-            color="surface-variant"
+            color="#111"
             href="https://vuetifyjs.com/components/all"
             prepend-icon="mdi-widgets-outline"
             rel="noopener noreferrer"
@@ -128,7 +138,7 @@
           <v-card
             append-icon="mdi-open-in-new"
             class="py-4"
-            color="surface-variant"
+            color="#111"
             href="https://discord.vuetifyjs.com"
             prepend-icon="mdi-account-group-outline"
             rel="noopener noreferrer"

@@ -15,9 +15,12 @@ func (c *ControllerV1) Register(ctx context.Context, req *v1.RegisterReq) (res *
 		Password: req.Password,
 	})
 	if err != nil {
-		return &v1.RegisterRes{}, err
+		return &v1.RegisterRes{
+			Msg: "failed",
+		}, err
 	}
 	return &v1.RegisterRes{
+		Msg:   "success",
 		Token: out.Token,
 	}, nil
 }

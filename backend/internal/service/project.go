@@ -12,7 +12,7 @@ import (
 
 type (
 	IProject interface {
-		CreateProject(ctx context.Context, in model.CreateProjectInput) (err error)
+		CreateProject(ctx context.Context, in model.CreateProjectInput) (id int64, err error)
 		DeleteProjectByIds(ctx context.Context, in model.DeleteProjectByIdsInput) (err error)
 		UpdateProject(ctx context.Context, in model.UpdateProjectInput) (err error)
 		GetProjectByPageUser(ctx context.Context, in model.GetProjectByPageUserInput) (out model.GetProjectByPageUserOutput, err error)

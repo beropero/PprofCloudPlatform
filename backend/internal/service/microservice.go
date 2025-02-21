@@ -12,7 +12,7 @@ import (
 
 type (
 	IMicroservice interface {
-		CreateMicroservice(ctx context.Context, in model.CreateMicroserviceInput) (err error)
+		CreateMicroservice(ctx context.Context, in model.CreateMicroserviceInput) (id int64, err error)
 		DeleteMicroserviceByIds(ctx context.Context, in model.DeleteMicroserviceByIdsInput) (err error)
 		UpdateMicroservice(ctx context.Context, in model.UpdateMicroserviceInput) (err error)
 		GetMicroserviceByPageUser(ctx context.Context, in model.GetMicroserviceByPageUserInput) (out model.GetMicroserviceByPageUserOutput, err error)

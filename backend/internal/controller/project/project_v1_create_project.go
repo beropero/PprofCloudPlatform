@@ -9,7 +9,7 @@ import (
 )
 
 func (c *ControllerV1) CreateProject(ctx context.Context, req *v1.CreateProjectReq) (res *v1.CreateProjectRes, err error) {
-	err = service.Project().CreateProject(ctx, model.CreateProjectInput{
+	id, err := service.Project().CreateProject(ctx, model.CreateProjectInput{
 		ProjectDescription: req.ProjectDescription,
 		ProjectName:        req.ProjectName,
 	})
@@ -20,5 +20,6 @@ func (c *ControllerV1) CreateProject(ctx context.Context, req *v1.CreateProjectR
 	}
 	return &v1.CreateProjectRes{
 		Msg: "success",
+		Id:  id,
 	}, err
 }

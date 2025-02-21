@@ -17,13 +17,13 @@ type DeleteProjectByIdsRes struct {
 
 type CreateProjectReq struct {
 	g.Meta             `path:"/createproject" method:"post" tags:"Project" summary:"创建Project"`
-	ProjectId          int    `json:"profileId"  `
 	ProjectName        string `json:"profileName"  `
 	ProjectDescription string `json:"profileDescription"  `
 }
 
 type CreateProjectRes struct {
 	Msg string `json:"msg"`
+	Id  int64  `json:"id"`
 }
 
 type UpdateProjectReq struct {

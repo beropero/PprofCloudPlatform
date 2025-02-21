@@ -19,6 +19,7 @@ type Microservice struct {
 	Ip                      interface{} //
 	Port                    interface{} //
 	MicroserviceDescription interface{} //
+	MicroserviceToken       interface{} //
 	CreatedAt               *gtime.Time //
 	UpdatedAt               *gtime.Time //
 	DeletedAt               *gtime.Time //

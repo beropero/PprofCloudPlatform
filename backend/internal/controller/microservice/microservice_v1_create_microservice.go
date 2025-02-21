@@ -9,7 +9,7 @@ import (
 )
 
 func (c *ControllerV1) CreateMicroservice(ctx context.Context, req *v1.CreateMicroserviceReq) (res *v1.CreateMicroserviceRes, err error) {
-	err = service.Microservice().CreateMicroservice(ctx, model.CreateMicroserviceInput{
+	id,err := service.Microservice().CreateMicroservice(ctx, model.CreateMicroserviceInput{
 		Ip:                      req.Ip,
 		MicroserviceDescription: req.MicroserviceDescription,
 		MicroserviceName:        req.MicroserviceName,
@@ -23,5 +23,6 @@ func (c *ControllerV1) CreateMicroservice(ctx context.Context, req *v1.CreateMic
 	}
 	return &v1.CreateMicroserviceRes{
 		Msg: "success",
+		Id: id,
 	}, err
 }

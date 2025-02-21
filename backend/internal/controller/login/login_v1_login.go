@@ -14,9 +14,12 @@ func (c *ControllerV1) Login(ctx context.Context, req *v1.LoginReq) (res *v1.Log
 		Password: req.Password,
 	})
 	if err != nil {
-		return &v1.LoginRes{}, err
+		return &v1.LoginRes{
+			Msg: "failed",
+		}, err
 	}
 	return &v1.LoginRes{
+		Msg:   "success",
 		Token: out.Token,
 	}, nil
 }

@@ -27,6 +27,7 @@ type MicroserviceColumns struct {
 	Ip                      string //
 	Port                    string //
 	MicroserviceDescription string //
+	MicroserviceToken       string //
 	CreatedAt               string //
 	UpdatedAt               string //
 	DeletedAt               string //
@@ -41,6 +42,7 @@ var microserviceColumns = MicroserviceColumns{
 	Ip:                      "ip",
 	Port:                    "port",
 	MicroserviceDescription: "microservice_description",
+	MicroserviceToken:       "microservice_token",
 	CreatedAt:               "created_at",
 	UpdatedAt:               "updated_at",
 	DeletedAt:               "deleted_at",

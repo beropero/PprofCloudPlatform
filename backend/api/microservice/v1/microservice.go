@@ -26,6 +26,7 @@ type CreateMicroserviceReq struct {
 
 type CreateMicroserviceRes struct {
 	Msg string `json:"msg"`
+	Id  int64  `json:"id"`
 }
 
 type UpdateMicroserviceReq struct {

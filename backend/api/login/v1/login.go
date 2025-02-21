@@ -8,6 +8,7 @@ type LoginReq struct {
 	Password string `json:"password" v:"required|length:6,20"`
 }
 type LoginRes struct {
+	Msg   string `json:"msg"`
 	Token string `json:"token"`
 }
 
@@ -19,6 +20,7 @@ type RegisterReq struct {
 }
 
 type RegisterRes struct {
+	Msg   string `json:"msg"`
 	Token string `json:"token"`
 }
 

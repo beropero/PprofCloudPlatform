@@ -16,6 +16,7 @@ func (c *ControllerV1) GetMicroserviceByPageUser(ctx context.Context, req *v1.Ge
 		MicroserviceDescription: req.MicroserviceDescription,
 		MicroserviceId:          req.MicroserviceId,
 		MicroserviceName:        req.MicroserviceName,
+		ProjectId:               req.ProjectId,
 		Port:                    req.Port,
 		Page:                    req.Page,
 		PageSize:                req.PageSize,

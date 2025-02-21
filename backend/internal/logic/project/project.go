@@ -8,6 +8,7 @@ import (
 	"context"
 
 	"github.com/gogf/gf/v2/frame/g"
+	"github.com/gogf/gf/v2/util/guid"
 )
 
 type sProject struct {
@@ -17,15 +18,16 @@ func init() {
 	service.RegisterProject(&sProject{})
 }
 
-func (s *sProject) CreateProject(ctx context.Context, in model.CreateProjectInput) (err error) {
+func (s *sProject) CreateProject(ctx context.Context, in model.CreateProjectInput) (id int64,err error) {
 	var (
 		user = service.BizCtx().Get(ctx).User
 	)
 	// 创建项目
-	_, err = dao.Project.Ctx(ctx).Insert(entity.Project{
+	id, err = dao.Project.Ctx(ctx).InsertAndGetId(entity.Project{
 		CreatorId:          user.UserId,
 		ProjectName:        in.ProjectName,
 		ProjectDescription: in.ProjectDescription,
+		ProjectToken: "prj_"+ guid.S(),
 	})
 	return
 }

@@ -6,7 +6,8 @@ import (
 )
 
 type Config struct {
-	Token     string
+	ProjectToken string
+	ServiceToken string
 	Interval  time.Duration
 	Timeout   time.Duration
 	UploadUrl string
@@ -18,16 +19,15 @@ func DefaultConfig() *Config {
 	return &Config{
 		Interval:  30 * time.Second,
 		Timeout:   10 * time.Second,
-		UploadUrl: "https://api.pprof.control.dev/v1/upload",
-		Port:      8080,
+		UploadUrl: "http://127.0.0.1:8086/upload/uploadfile",
 	}
 }
 
 // Validate checks if the config is valid
 func (c *Config) Validate() error {
 	defaultConfig := DefaultConfig()
-	if c.Token == "" {
-		return fmt.Errorf("token must be specified")
+	if c.ServiceToken == "" {
+		return fmt.Errorf("ServiceToken must be specified")
 	}
 	if c.UploadUrl == "" {
 		c.UploadUrl = defaultConfig.UploadUrl

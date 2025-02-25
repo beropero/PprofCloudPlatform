@@ -10,6 +10,7 @@ import (
 	"time"
 
 	"github.com/beropero/PprofCloudPlatform/client/go/v1/capture"
+	"github.com/beropero/PprofCloudPlatform/client/go/v1/config"
 	"github.com/beropero/PprofCloudPlatform/client/go/v1/uploader"
 )
 
@@ -21,7 +22,7 @@ type ProfileData struct {
 	Goroutine []byte `json:"goroutine"`
 }
 
-func (c *Controller) CaptureProfileDataAndUpload(types []string) error {
+func (c *Controller) CaptureProfileDataAndUpload(types []string, comment string) error {
 	// 创建请求体缓冲区
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
@@ -47,15 +48,6 @@ func (c *Controller) CaptureProfileDataAndUpload(types []string) error {
 		dedupedTypes = append(dedupedTypes, t)
 	}
 
-	// 预校验所有类型合法性
-	for _, t := range dedupedTypes {
-		switch t {
-		case "cpu", "memory", "mutex", "block", "goroutine":
-			// 合法类型
-		default:
-			return fmt.Errorf("unknown profile type: %q", t)
-		}
-	}
 	// 捕获指定类型
 	for _, t := range dedupedTypes {
 		switch t {
@@ -108,8 +100,12 @@ func (c *Controller) CaptureProfileDataAndUpload(types []string) error {
 			return fmt.Errorf("unknown profile type: %s", t)
 		}
 	}
+	// 添加注释作为表单字段
+	if err := writer.WriteField("comment", comment); err != nil {
+		return fmt.Errorf("failed to write comment field: %w", err)
+	}
 	// 上传数据
-	err = uploader.UploadFormData(body, writer, c.Config.UploadUrl)
+	err = uploader.UploadFormData(body, writer, config.DefaultConfig().UploadUrl, c.Config)
 	if err != nil {
 		return fmt.Errorf("failed to upload profile data: %w", err)
 	}

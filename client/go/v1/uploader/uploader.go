@@ -8,6 +8,8 @@ import (
 	"mime/multipart"
 	"net/http"
 	"time"
+
+	"github.com/beropero/PprofCloudPlatform/client/go/v1/config"
 )
 
 // 上传json数据到后台.
@@ -40,7 +42,7 @@ func UploadJsonData(data interface{}, url string) error {
 }
 
 // 上传form-data数据到后台.
-func UploadFormData(payload *bytes.Buffer, writer *multipart.Writer, url string) error {
+func UploadFormData(payload *bytes.Buffer, writer *multipart.Writer, url string, config *config.Config) error {
 	method := "POST"
 	// 设置超时的HTTP客户端
 	client := &http.Client{
@@ -61,7 +63,7 @@ func UploadFormData(payload *bytes.Buffer, writer *multipart.Writer, url string)
 	// 设置请求头
 	req.Header.Set("User-Agent", "pprof-control-client")
 	req.Header.Set("Content-Type", writer.FormDataContentType())
-
+	req.Header.Set("X-Profile-Token", config.ServiceToken)
 	// 发送请求
 	res, err := client.Do(req)
 	if err != nil {

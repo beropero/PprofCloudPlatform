@@ -11,13 +11,14 @@ import (
 
 // 定义接收数据的结构体
 type RequestData struct {
-	Token string   `json:"token"`
-	Types []string `json:"types"`
+	ServiceToken string   `json:"serviceToken"`
+	Types        []string `json:"types"`
+	Comment      string   `json:"comment"`
 }
 
 func (c *Controller) WebServerStart() {
 	// 注册处理函数
-	http.HandleFunc("/receive", c.receiveHandler)
+	http.HandleFunc("/runtest", enableCORS(c.receiveHandler))
 	// 检查端口是否可用
 	if isPortAvailable(c.Config.Port) {
 		log.Printf("Port %d is available.", c.Config.Port)
@@ -34,7 +35,7 @@ func (c *Controller) WebServerStart() {
 func (c *Controller) receiveHandler(w http.ResponseWriter, r *http.Request) {
 	// 设置响应头
 	w.Header().Set("Content-Type", "application/json")
-
+	fmt.Println(r.Body)
 	// 解析请求体
 	var requestData RequestData
 	err := json.NewDecoder(r.Body).Decode(&requestData)
@@ -43,14 +44,15 @@ func (c *Controller) receiveHandler(w http.ResponseWriter, r *http.Request) {
 		json.NewEncoder(w).Encode(map[string]string{"error": "Invalid request body"})
 		return
 	}
+	fmt.Println(requestData)
 	// 检查token
-	if requestData.Token != c.Config.Token {
+	if requestData.ServiceToken != c.Config.ServiceToken {
 		w.WriteHeader(http.StatusUnauthorized)
 		json.NewEncoder(w).Encode(map[string]string{"error": "Invalid token"})
 		return
 	}
 	// 处理接收到的数据
-	err = c.CaptureProfileDataAndUpload(requestData.Types)
+	err = c.CaptureProfileDataAndUpload(requestData.Types, requestData.Comment)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(map[string]string{"error": "Failed to upload profile data"})
@@ -75,4 +77,20 @@ func isPortAvailable(port int) bool {
 	}
 	defer conn.Close()
 	return false
+}
+
+// 添加 CORS 中间件
+func enableCORS(next http.HandlerFunc) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")                                                            // 允许访问所有域
+		w.Header().Add("Access-Control-Allow-Headers", "Content-Type,AccessToken,X-CSRF-Token, Authorization, Token") // 允许的请求头
+		w.Header().Add("Access-Control-Allow-Credentials", "true")                                                    // 允许携带 Cookie
+		w.Header().Add("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE")                             // 允许的请求方法
+		w.Header().Set("content-type", "application/json;charset=UTF-8")                                              // 返回数据格式
+		if r.Method == "OPTIONS" {
+			w.WriteHeader(http.StatusNoContent)
+			return
+		}
+		next(w, r)
+	}
 }

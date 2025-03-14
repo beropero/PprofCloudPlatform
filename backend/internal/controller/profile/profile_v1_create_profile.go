@@ -13,10 +13,9 @@ import (
 
 func (c *ControllerV1) CreateProfile(ctx context.Context, req *v1.CreateProfileReq) (res *v1.CreateProfileRes, err error) {
 	if err := service.Profile().CreateProfile(ctx, model.CreateProfileInput{
-		Comment:        req.Comment,
-		MicroserviceId: req.MicroserviceId,
-		ProjectId:      req.ProjectId,
-		Ptype:          req.Ptype,
+		ServiceToken: req.ServiceToken,
+		Comment:      req.Comment,
+		Ptype:        req.Ptype,
 	}); err != nil {
 		return &v1.CreateProfileRes{
 			Msg: "failed",

@@ -2,10 +2,111 @@ package capture
 
 import (
 	"bytes"
+	"context"
+	"fmt"
+	"runtime"
 	"runtime/pprof"
 	"runtime/trace"
+	"strconv"
 	"time"
+
+	"github.com/google/pprof/profile"
 )
+
+type Capture string
+
+var ProfileSupportsDelta = map[Capture]bool{
+	"allocs":       true,
+	"block":        true,
+	"goroutine":    true,
+	"heap":         true,
+	"mutex":        true,
+	"threadcreate": true,
+}
+
+type CollectInput struct {
+	gc     bool
+	secStr string
+	p      *pprof.Profile
+}
+
+func (name Capture) Collect(ctx context.Context, in CollectInput) (b []byte, err error) {
+	var buf bytes.Buffer
+	p := pprof.Lookup(string(name))
+	in.p = p
+	if p == nil {
+		return nil, fmt.Errorf("unknown profile type: %s", name)
+	}
+	if in.secStr != "" {
+		b, err = name.CollectDeltaProfile(ctx, in)
+		return
+	}
+	if name == "heap" && in.gc {
+		runtime.GC()
+	}
+	err = p.WriteTo(&buf, 0)
+	return buf.Bytes(), err
+}
+
+func (name Capture) CollectDeltaProfile(ctx context.Context, in CollectInput) ([]byte, error) {
+	var buf bytes.Buffer
+	sec, err := strconv.ParseInt(in.secStr, 10, 64)
+	if err != nil || sec <= 0 {
+		return nil, fmt.Errorf("seconds parameter must be a positive integer")
+	}
+	if !ProfileSupportsDelta[name] {
+		return nil, fmt.Errorf("delta profiles not supported for %s", name)
+	}
+	
+
+	p0, err := collectProfile(in.p)
+	if err != nil {
+		return nil, fmt.Errorf("failed to collect profile")
+	}
+
+	// 添加间隔控制
+	timer := time.NewTimer(time.Duration(sec) * time.Second)
+	defer timer.Stop()
+
+	select {
+	case <-ctx.Done():
+		return nil, fmt.Errorf("profile canceled: %w", ctx.Err())
+	case <-timer.C:
+	}
+
+	p1, err := collectProfile(in.p)
+	if err != nil {
+		return nil, fmt.Errorf("failed to collect profile")
+	}
+	ts := p1.TimeNanos
+	dur := p1.TimeNanos - p0.TimeNanos
+
+	p0.Scale(-1)
+
+	p1, err = profile.Merge([]*profile.Profile{p0, p1})
+	if err != nil {
+		return nil, fmt.Errorf("failed to merge profiles")
+	}
+
+	p1.TimeNanos = ts
+	p1.DurationNanos = dur
+	err = p1.Write(&buf)
+	return buf.Bytes(), err
+}
+
+func collectProfile(p *pprof.Profile) (*profile.Profile, error) {
+	var buf bytes.Buffer
+	if err := p.WriteTo(&buf, 0); err != nil {
+		return nil, err
+	}
+	ts := time.Now().UnixNano()
+	p0, err := profile.Parse(&buf)
+	if err != nil {
+		return nil, err
+	}
+	p0.TimeNanos = ts
+	return p0, nil
+}
 
 // CaptureCPUProfile 采集CPU Profile数据
 func CaptureCPUProfile(duration time.Duration) ([]byte, error) {
@@ -15,69 +116,6 @@ func CaptureCPUProfile(duration time.Duration) ([]byte, error) {
 	}
 	time.Sleep(duration)
 	pprof.StopCPUProfile()
-	return buf.Bytes(), nil
-}
-
-// CaptureMemoryProfile 采集Memory Profile数据
-func CaptureMemoryProfile() ([]byte, error) {
-	var buf bytes.Buffer
-	if err := pprof.WriteHeapProfile(&buf); err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
-}
-
-// CaptureBlockProfile 采集Block Profile数据
-func CaptureBlockProfile() ([]byte, error) {
-	var buf bytes.Buffer
-	if err := pprof.Lookup("block").WriteTo(&buf, 0); err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
-}
-
-// CaptureMutexProfile 采集Mutex Profile数据
-func CaptureMutexProfile() ([]byte, error) {
-	var buf bytes.Buffer
-	if err := pprof.Lookup("mutex").WriteTo(&buf, 0); err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
-}
-
-// CaptureGoroutineProfile 采集Goroutine Profile数据
-func CaptureGoroutineProfile() ([]byte, error) {
-	var buf bytes.Buffer
-	if err := pprof.Lookup("goroutine").WriteTo(&buf, 0); err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
-}
-
-// CaptureThreadProfile 采集Thread Profile数据
-func CaptureThreadProfile() ([]byte, error) {
-	var buf bytes.Buffer
-	if err := pprof.Lookup("threadcreate").WriteTo(&buf, 0); err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
-}
-
-// CaptureHeapProfile 采集Heap Profile数据
-func CaptureHeapProfile() ([]byte, error) {
-	var buf bytes.Buffer
-	if err := pprof.Lookup("heap").WriteTo(&buf, 0); err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
-}
-
-// CaptureAllocsProfile 采集Allocs Profile数据
-func CaptureAllocsProfile() ([]byte, error) {
-	var buf bytes.Buffer
-	if err := pprof.Lookup("allocs").WriteTo(&buf, 0); err != nil {
-		return nil, err
-	}
 	return buf.Bytes(), nil
 }
 
@@ -92,49 +130,4 @@ func CaptureTraceProfile(duration time.Duration) ([]byte, error) {
 	return buf.Bytes(), nil
 }
 
-// CaptureCustomProfile 采集自定义Profile数据
-func CaptureCustomProfile() ([]byte, error) {
-	var customProfile = pprof.NewProfile("custom")
-	var buf bytes.Buffer
-	if err := customProfile.WriteTo(&buf, 0); err != nil {
-		return nil, err
-	}
-	return buf.Bytes(), nil
-}
-
-// CaptureSymbolProfile 采集Symbol Profile数据
-func CaptureSymbolProfile() ([]byte, error) {
-    var buf bytes.Buffer
-    if err := pprof.Lookup("symbol").WriteTo(&buf, 0); err != nil {
-        return nil, err
-    }
-    return buf.Bytes(), nil
-}
-
-// CaptureContentionProfile 采集Contention Profile数据
-func CaptureContentionProfile() ([]byte, error) {
-    var buf bytes.Buffer
-    if err := pprof.Lookup("contention").WriteTo(&buf, 0); err != nil {
-        return nil, err
-    }
-    return buf.Bytes(), nil
-}
-
-//  CaptureSchedulerProfile 采集Scheduler Profile数据
-func CaptureSchedulerProfile() ([]byte, error) {
-    var buf bytes.Buffer
-    if err := pprof.Lookup("sched").WriteTo(&buf, 0); err != nil {
-        return nil, err
-    }
-    return buf.Bytes(), nil
-}
-
-//  CaptureGCProfile 采集GC Profile数据
-func CaptureGCProfile() ([]byte, error) {
-    var buf bytes.Buffer
-    if err := pprof.Lookup("gc").WriteTo(&buf, 0); err != nil {
-        return nil, err
-    }
-    return buf.Bytes(), nil
-}
-
+//

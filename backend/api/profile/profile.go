@@ -15,4 +15,5 @@ type IProfileV1 interface {
 	CreateProfile(ctx context.Context, req *v1.CreateProfileReq) (res *v1.CreateProfileRes, err error)
 	UpdateProfile(ctx context.Context, req *v1.UpdateProfileReq) (res *v1.UpdateProfileRes, err error)
 	GetProfileByPageUser(ctx context.Context, req *v1.GetProfileByPageUserReq) (res *v1.GetProfileByPageUserRes, err error)
+	GetProfileContent(ctx context.Context, req *v1.GetProfileContentReq) (res *v1.GetProfileContentRes, err error)
 }

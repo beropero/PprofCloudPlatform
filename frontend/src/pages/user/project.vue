@@ -61,6 +61,7 @@
       :search="search"
       item-value="name"
       style="background-color: white;color: black;"
+      :hide-no-data="true"
       @update:options="loadItems"
     >
       <template #top>
@@ -120,10 +121,27 @@
           inset
           vertical
         />
-        <v-btn
-          density="compact"
-          icon="mdi-delete-outline"
-        />
+        <v-speed-dial
+          location="left center"
+          transition="fade-transition"
+        >
+          <template #activator="{ props: activatorProps }">
+            <v-fab
+              v-bind="activatorProps"
+              density="compact"
+              icon="mdi-dots-vertical"
+            />
+          </template>
+
+          <v-btn
+            key="1"
+            icon="mdi-delete"
+          />
+          <v-btn
+            key="2"
+            icon="mdi-pencil"
+          />
+        </v-speed-dial>
       </template>
     </v-data-table-server>
   </v-app>

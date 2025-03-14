@@ -2,13 +2,14 @@ package model
 
 import (
 	"backend/internal/model/entity"
+	"github.com/google/pprof/profile"
 )
 
 type CreateProfileInput struct {
-	MicroserviceId int    `json:"microserviceId" ` //
-	ProjectId      int    `json:"projectId"    `   //
-	Ptype          string `json:"ptype"       `    //
-	Comment        string `json:"comment"   `      //
+	ServiceToken string `json:"serviceToken"       `
+	Ptype        string `json:"ptype"       ` //
+	Comment      string `json:"comment"   `   //
+	OssPath      string `json:"ossPath"   `
 }
 
 type UpdateProfileInput struct {
@@ -33,4 +34,11 @@ type GetProfileByPageUserInput struct {
 type GetProfileByPageUserOutput struct {
 	Total    int              `json:"total"   `
 	Profiles []entity.Profile `json:"profiles"   `
+}
+
+type GetProfileContentInput struct {
+	Id int `json:"id"   `
+}
+type GetProfileContentOutput struct {
+	FileContent *profile.Profile `json:"fileContent"   `
 }

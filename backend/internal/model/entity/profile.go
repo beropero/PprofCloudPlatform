@@ -10,7 +10,7 @@ import (
 
 // Profile is the golang structure for table profile.
 type Profile struct {
-	Id             uint64      `json:"id"             orm:"id"              description:""` //
+	Id             int         `json:"id"             orm:"id"              description:""` //
 	MicroserviceId int         `json:"microserviceId" orm:"microservice_id" description:""` //
 	ProjectId      int         `json:"projectId"      orm:"project_id"      description:""` //
 	Ptype          string      `json:"ptype"          orm:"ptype"           description:""` //

@@ -6,9 +6,7 @@ import (
 	"backend/internal/model/entity"
 	"backend/internal/service"
 	"context"
-	"fmt"
 
-	"github.com/gogf/gf/v2/errors/gerror"
 	"github.com/gogf/gf/v2/frame/g"
 	"github.com/gogf/gf/v2/util/guid"
 )
@@ -59,11 +57,6 @@ func (s *sMicroservice) GetMicroserviceByPageUser(ctx context.Context, in model.
 	var (
 		user = service.BizCtx().Get(ctx).User
 	)
-	// 检测权限
-	count, err := dao.Project.Ctx(ctx).Where("project_id", in.ProjectId).Where("creator_id", user.UserId).Count()
-	if count == 0 || err != nil {
-		return out, gerror.New(fmt.Sprintf("无权限访问项目%d", in.ProjectId))
-	}
 	if in.MicroserviceName != "" {
 		in.MicroserviceName = "%" + in.MicroserviceName + "%"
 	}

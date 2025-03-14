@@ -1,14 +1,12 @@
 module backend
 
-go 1.22
-
-toolchain go1.22.1
+go 1.22.1
 
 require github.com/gogf/gf/v2 v2.8.3
 
 require golang.org/x/crypto v0.32.0
 
-require github.com/google/pprof v0.0.0-20250128161936-077ca0a936bf
+require github.com/google/pprof v0.0.0-20250208200701-d0013a598941
 
 require (
 	github.com/cespare/xxhash/v2 v2.2.0 // indirect
@@ -32,6 +30,7 @@ require (
 
 require (
 	github.com/BurntSushi/toml v1.4.0 // indirect
+	github.com/beropero/PprofCloudPlatform/client/go v0.0.0-20250225025108-07fcdc99e093
 	github.com/clbanning/mxj/v2 v2.7.0 // indirect
 	github.com/fatih/color v1.18.0 // indirect
 	github.com/fsnotify/fsnotify v1.7.0 // indirect

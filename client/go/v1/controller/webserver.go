@@ -11,9 +11,11 @@ import (
 
 // 定义接收数据的结构体
 type RequestData struct {
-	ServiceToken string   `json:"serviceToken"`
-	Types        []string `json:"types"`
-	Comment      string   `json:"comment"`
+	ServiceToken string `json:"serviceToken"`
+	Type         string `json:"type"`
+	Comment      string `json:"comment"`
+	Sec          int    `json:"sec"`
+	Gc           bool   `json:"gc"`
 }
 
 func (c *Controller) WebServerStart() {
@@ -52,7 +54,12 @@ func (c *Controller) receiveHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// 处理接收到的数据
-	err = c.CaptureProfileDataAndUpload(requestData.Types, requestData.Comment)
+	err = c.CaptureProfileDataAndUpload(r.Context(), ProfileInput{
+		Type:    requestData.Type,
+		Comment: requestData.Comment,
+		Sec:     requestData.Sec,
+		Gc:      requestData.Gc,
+	})
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		json.NewEncoder(w).Encode(map[string]string{"error": "Failed to upload profile data"})

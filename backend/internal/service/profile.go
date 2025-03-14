@@ -16,6 +16,8 @@ type (
 		DeleteProfileByIds(ctx context.Context, in model.DeleteProfileByIdsInput) (err error)
 		UpdateProfile(ctx context.Context, in model.UpdateProfileInput) (err error)
 		GetProfileByPageUser(ctx context.Context, in model.GetProfileByPageUserInput) (out model.GetProfileByPageUserOutput, err error)
+		// 获取文件内容
+		GetProfileContent(ctx context.Context, in model.GetProfileContentInput) (out model.GetProfileContentOutput, err error)
 	}
 )
 

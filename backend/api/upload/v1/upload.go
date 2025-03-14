@@ -6,13 +6,10 @@ import (
 )
 
 type UploadReq struct {
-	g.Meta    `path:"/uploadfile" method:"post" tags:"Upload" mime:"multipart/form-data" summary:"上传所有性能数据"`
-	Types     []string          `form:"type" json:"types" v:"required#类型不能为空"`
-	Cpu       *ghttp.UploadFile `form:"cpu" json:"cpu"`
-	Memory    *ghttp.UploadFile `form:"memory" json:"memory"`
-	Mutex     *ghttp.UploadFile `form:"mutex" json:"mutex"`
-	Block     *ghttp.UploadFile `form:"block" json:"block"`
-	Goroutine *ghttp.UploadFile `form:"goroutine" json:"goroutine"`
+	g.Meta  `path:"/uploadfile" method:"post" tags:"Upload" mime:"multipart/form-data" summary:"上传所有性能数据"`
+	Type    string            `form:"type" json:"type" v:"required#类型不能为空"`
+	File    *ghttp.UploadFile `form:"file"       json:"file" v:"required#类型不能为空"`
+	Comment string            `form:"comment"   json:"comment" `
 }
 
 type UploadRes struct {

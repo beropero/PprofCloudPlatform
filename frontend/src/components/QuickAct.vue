@@ -23,7 +23,7 @@
 <script setup lang="ts">
     const quickActions = ref([
     { title: '新建测试', icon: 'mdi-plus', handler: () => console.log('New Test') },
-    { title: '历史记录', icon: 'mdi-history', handler: () => console.log('History') },
+    { title: '编辑资料', icon: 'mdi-pencil', handler: () => console.log('History') },
     { title: '文档中心', icon: 'mdi-file-document', handler: () => console.log('Docs') },
     { title: '系统设置', icon: 'mdi-cog', handler: () => console.log('Settings') }
     ])

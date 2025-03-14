@@ -45,17 +45,16 @@ CREATE TABLE microservice (
 -- 测试记录
 -- Create profile table
 CREATE TABLE profile (
-    id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY ,
+    id INT PRIMARY KEY AUTO_INCREMENT,
     microservice_id INT,
     project_id INT,
     ptype VARCHAR(255) NOT NULL,
-    oss_path VARCHAR(255) NOT NULL,
-    comment VARCHAR(255) NOT NULL,
+    oss_path VARCHAR(255)  ,
+    comment VARCHAR(255)  ,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     deleted_at TIMESTAMP NULL,
-    FOREIGN KEY (microservice_id) REFERENCES microservice(microservice_id),
-    FOREIGN KEY (project_id) REFERENCES project(project_id)  
+    FOREIGN KEY (microservice_id) REFERENCES microservice(microservice_id)
 );
 
 
@@ -200,3 +199,16 @@ INSERT INTO microservice (project_id, creator_id, microservice_name, ip, port, m
 (10, 1, '固件服务', '10.100.7.108', 10007, 'OTA固件升级','mis_21'),
 (10, 1, '日志服务', '10.100.7.109', 10008, '操作日志记录','mis_21'),
 (10, 1, 'API网关', '10.100.7.110', 10009, '统一接入网关','mis_21');
+
+
+INSERT INTO profile (microservice_id, project_id, ptype, oss_path, comment) VALUES
+(1, 1, 'cpu', 'oss://pprof/project1/ms1/profile_1.pprof', 'pprof profile test data 1'),
+(1, 1, 'memory', 'oss://pprof/project1/ms1/profile_2.pprof', 'pprof profile test data 2'),
+(1, 1, 'gorutine', 'oss://pprof/project1/ms1/profile_3.pprof', 'pprof profile test data 3'),
+(1, 1, 'block', 'oss://pprof/project1/ms1/profile_4.pprof', 'pprof profile test data 4'),
+(1, 1, 'mutex', 'oss://pprof/project1/ms1/profile_5.pprof', 'pprof profile test data 5'),
+(1, 1, 'cpu', 'oss://pprof/project1/ms1/profile_6.pprof', 'pprof profile test data 6'),
+(1, 1, 'memory', 'oss://pprof/project1/ms1/profile_7.pprof', 'pprof profile test data 7'),
+(1, 1, 'gorutine', 'oss://pprof/project1/ms1/profile_8.pprof', 'pprof profile test data 8'),
+(1, 1, 'block', 'oss://pprof/project1/ms1/profile_9.pprof', 'pprof profile test data 9'),
+(1, 1, 'mutex', 'oss://pprof/project1/ms1/profile_10.pprof', 'pprof profile test data 10');

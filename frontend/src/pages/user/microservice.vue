@@ -147,17 +147,34 @@
         <v-btn
           density="compact"
           icon="mdi-chevron-right"
-          @click="() => router.push({ path: '/user/profile', query: { projectId: (item as any).item.microserviceId } })"
+          @click="() => router.push({ path: '/user/profile', query: { microserviceId: (item as any).item.microserviceId } })"
         />
         <v-divider
           class="ms-3"
           inset
           vertical
         />
-        <v-btn
-          density="compact"
-          icon="mdi-delete-outline"
-        />
+        <v-speed-dial
+          location="left center"
+          transition="fade-transition"
+        >
+          <template #activator="{ props: activatorProps }">
+            <v-fab
+              v-bind="activatorProps"
+              density="compact"
+              icon="mdi-dots-vertical"
+            />
+          </template>
+
+          <v-btn
+            key="1"
+            icon="mdi-delete"
+          />
+          <v-btn
+            key="2"
+            icon="mdi-pencil"
+          />
+        </v-speed-dial>
       </template>
     </v-data-table-server>
   </v-app>
@@ -220,7 +237,6 @@
       methods: {
         async loadItems ({ page, itemsPerPage }: { page: number, itemsPerPage: number, sortBy: { key: string, order: string }[] }) {
             this.loading = true
-            const ProjectId = router.currentRoute.value.query.projectId
             await GetMicroserviceByPageUser({
                 page: page,
                 pageSize: itemsPerPage,
@@ -229,7 +245,7 @@
                 MicroserviceId: this.id as unknown as number,
                 MicroserviceName: this.name,
                 Port: this.port as unknown as number,
-                ProjectId: ProjectId as unknown as number
+                ProjectId: router.currentRoute.value.query.projectId as unknown as number
             }).then((res) => {
               const data = res.data.data || []
               this.serverItems = data.microservices || []

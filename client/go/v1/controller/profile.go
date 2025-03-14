@@ -2,11 +2,11 @@ package controller
 
 import (
 	"bytes"
+	"context"
 	"fmt"
 	"mime/multipart"
 	"os"
 	"path/filepath"
-	"strings"
 	"time"
 
 	"github.com/beropero/PprofCloudPlatform/client/go/v1/capture"
@@ -14,20 +14,19 @@ import (
 	"github.com/beropero/PprofCloudPlatform/client/go/v1/uploader"
 )
 
-type ProfileData struct {
-	CPU       []byte `json:"cpu"`
-	Memory    []byte `json:"memory"`
-	Mutex     []byte `json:"mutex"`
-	Block     []byte `json:"block"`
-	Goroutine []byte `json:"goroutine"`
+type ProfileInput struct {
+	Comment string `json:"comment"`
+	Sec     int    `json:"sec"`
+	Type    string `json:"type"`
+	Gc      bool   `json:"gc"`
 }
 
-func (c *Controller) CaptureProfileDataAndUpload(types []string, comment string) error {
+func (c *Controller) CaptureProfileDataAndUpload(ctx context.Context, in ProfileInput) error {
 	// 创建请求体缓冲区
 	body := &bytes.Buffer{}
 	writer := multipart.NewWriter(body)
 	// 添加类型作为表单字段
-	err := writer.WriteField("types", strings.Join(types, ","))
+	err := writer.WriteField("type", in.Type)
 	if err != nil {
 		return fmt.Errorf("failed to write types field: %w", err)
 	}
@@ -35,73 +34,41 @@ func (c *Controller) CaptureProfileDataAndUpload(types []string, comment string)
 	if err := writer.WriteField("service", "pprofprofile"); err != nil {
 		return fmt.Errorf("failed to write service field: %w", err)
 	}
-	data := &ProfileData{} // 初始化所有字段为 nil
-	fmt.Println("types:", types)
-	// 去重处理，避免重复捕获相同类型
-	uniqueTypes := make(map[string]struct{})
-	dedupedTypes := make([]string, 0, len(types))
-	for _, t := range types {
-		if _, exists := uniqueTypes[t]; exists {
-			continue
-		}
-		uniqueTypes[t] = struct{}{}
-		dedupedTypes = append(dedupedTypes, t)
-	}
 
 	// 捕获指定类型
-	for _, t := range dedupedTypes {
-		switch t {
-		case "cpu":
-			cpudata, err := capture.CaptureCPUProfile(5 * time.Second)
-			if err != nil {
-				return fmt.Errorf("failed to capture CPU profile: %w", err)
-			}
-			data.CPU = cpudata
-			if err := addFilePart(t, data.CPU, writer); err != nil {
-				return fmt.Errorf("failed to add CPU profile: %w", err)
-			}
-		case "memory":
-			memdata, err := capture.CaptureMemoryProfile()
-			if err != nil {
-				return fmt.Errorf("failed to capture memory profile: %w", err)
-			}
-			data.Memory = memdata
-			if err := addFilePart(t, data.Memory, writer); err != nil {
-				return fmt.Errorf("failed to add CPU profile: %w", err)
-			}
-		case "mutex":
-			mutexdata, err := capture.CaptureMutexProfile()
-			if err != nil {
-				return fmt.Errorf("failed to capture mutex profile: %w", err)
-			}
-			data.Mutex = mutexdata
-			if err := addFilePart(t, data.Mutex, writer); err != nil {
-				return fmt.Errorf("failed to add CPU profile: %w", err)
-			}
-		case "block":
-			blockdata, err := capture.CaptureBlockProfile()
-			if err != nil {
-				return fmt.Errorf("failed to capture block profile: %w", err)
-			}
-			data.Block = blockdata
-			if err := addFilePart(t, data.Block, writer); err != nil {
-				return fmt.Errorf("failed to add CPU profile: %w", err)
-			}
-		case "goroutine":
-			goroutinedata, err := capture.CaptureGoroutineProfile()
-			if err != nil {
-				return fmt.Errorf("failed to capture goroutine profile: %w", err)
-			}
-			data.Goroutine = goroutinedata
-			if err := addFilePart(t, data.Goroutine, writer); err != nil {
-				return fmt.Errorf("failed to add CPU profile: %w", err)
-			}
-		default:
-			return fmt.Errorf("unknown profile type: %s", t)
+	var buf []byte
+	var sec = in.Sec
+	switch in.Type {
+	case "cpu":
+		if sec == 0 {
+			sec = 5
 		}
+		buf, err = capture.CaptureCPUProfile(time.Duration(sec) * time.Second)
+		if err != nil {
+			return fmt.Errorf("failed to capture CPU profile: %w", err)
+		}
+	case "trace":
+		if sec == 0 {
+			sec = 5
+		}
+		buf, err = capture.CaptureTraceProfile(time.Duration(sec) * time.Second)
+		if err != nil {
+			return fmt.Errorf("failed to capture trace profile: %w", err)
+		}
+	default:
+		c := capture.Capture(in.Type)
+		buf, err = c.Collect(ctx, capture.CollectInput{})
+		if err != nil {
+			return fmt.Errorf("failed to capture delta profile: %w", err)
+		}
+
+	}
+	// 添加二进制数据到表单
+	if err := addFilePart(in.Type, buf, writer); err != nil {
+		return fmt.Errorf("failed to add delta profile: %w", err)
 	}
 	// 添加注释作为表单字段
-	if err := writer.WriteField("comment", comment); err != nil {
+	if err := writer.WriteField("comment", in.Comment); err != nil {
 		return fmt.Errorf("failed to write comment field: %w", err)
 	}
 	// 上传数据
@@ -129,7 +96,7 @@ func addFilePart(fieldName string, data []byte, writer *multipart.Writer) error 
 	defer os.Remove(tempFile)
 
 	// 创建表单文件字段
-	part, err := writer.CreateFormFile(fieldName, filepath.Base(tempFile))
+	part, err := writer.CreateFormFile("file", filepath.Base(tempFile))
 	if err != nil {
 		return fmt.Errorf("创建表单文件失败: %w", err)
 	}
